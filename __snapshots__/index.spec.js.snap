@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UnderReact can bind click listeners 1`] = `"<main><div><h1>The button has not been clicked</h1><button>Click me</button></div></main>"`;
+exports[`UnderReact can bind event listeners 1`] = `"<main><div><h1>The button has not been clicked</h1><button>Click me</button></div></main>"`;
 
-exports[`UnderReact can bind click listeners 2`] = `"<main><div><h1>The button has been clicked</h1><button>Click me</button></div></main>"`;
+exports[`UnderReact can bind event listeners 2`] = `"<main><div><h1>The button has been clicked</h1><button>Click me</button></div></main>"`;
 
 exports[`UnderReact can render props 1`] = `"<main><p>bar</p></main>"`;
 

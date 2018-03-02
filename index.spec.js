@@ -1,9 +1,9 @@
-const {
+import {
   Component,
   Element,
   createElement,
   render,
-} = require('./');
+} from './';
 
 describe('UnderReact', () => {
   it('should render DOM elements', () => {
@@ -90,7 +90,7 @@ describe('UnderReact', () => {
     expect(main.outerHTML).toMatchSnapshot();
   });
 
-  it('can bind click listeners', async () => {
+  it('can bind event listeners', async () => {
     class MyComponent extends Component {
       constructor (props) {
         super(props);
@@ -101,7 +101,7 @@ describe('UnderReact', () => {
         return createElement('div', null, [
           createElement('h1', null, `The button has ${this.state.clicked ? '' : 'not '}been clicked`),
           createElement('button', {
-            onClick: () => this.setState({ clicked: true }),
+            onclick: () => this.setState({ clicked: true }),
           }, 'Click me'),
         ]);
       }
@@ -143,7 +143,7 @@ describe('UnderReact', () => {
         return createElement('div', null, [
           createElement(ChildComponent, { clicked: this.state.clicked }),
           createElement('button', {
-            onClick: () => this.setState({ clicked: true }),
+            onclick: () => this.setState({ clicked: true }),
           }, 'Click me'),
         ]);
       }

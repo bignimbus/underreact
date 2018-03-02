@@ -1,4 +1,5 @@
-class Component {
+// Underreact: a (deficient) React clone in 100 lines
+export class Component {
   constructor (props = {}) {
     this.props = props;
     this.state = {};
@@ -22,15 +23,18 @@ class Component {
 
 class Element {
   constructor (opts) {
-    const { type, props, children } = opts;
+    const { type, props, children = [] } = opts;
     this.props = { type, props, children };
     this.instance = null;
     return this;
   }
 
-  bindEvents(el) {
-    if (this.props.props && this.props.props.onClick) {
-      el.addEventListener('click', this.props.props.onClick, false);
+  bindHtmlProps (el) {
+    const { props = {} } = this.props;
+    for (let key in props) {
+      if (props.hasOwnProperty(key)) {
+        el[key] = props[key];
+      }
     }
   }
 
@@ -61,7 +65,7 @@ class Element {
     const { type, props, children } = this.props;
     const renderHtmlElement = () => {
       const el = document.createElement(type);
-      this.bindEvents(el);
+      this.bindHtmlProps(el);
       this.renderChildren(el, children);
       return el;
     }
@@ -78,7 +82,7 @@ class Element {
   }
 }
 
-function createElement (type, props = {}, children) {
+export function createElement (type, props = {}, children) {
   children = children || props.children;
   const el = new Element({ type, props, children });
   return el;
@@ -88,12 +92,9 @@ function update (el, parent) {
   return el.renderer(parent)();
 }
 
-function render (el, element, oldElement) {
+export function render (el, element, oldElement) {
   if (oldElement) element.removeChild(oldElement);
-  element.appendChild(update(el, element));
-  return el;
+  const _el = update(el, element);
+  element.appendChild(_el);
+  return _el;
 }
-
-const exps = { Component, createElement, render };
-
-module.exports = exps;
