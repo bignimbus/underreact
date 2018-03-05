@@ -1,5 +1,4 @@
 // Underreact: a (deficient) React clone in 99 lines
-
 export class Component {
   constructor (props = {}) {
     this.props = props;
@@ -26,7 +25,6 @@ class Element {
   constructor (opts) {
     const { type, props, children = [] } = opts;
     this.props = { type, props, children };
-    this.instance = null;
     return this;
   }
 
@@ -79,8 +77,7 @@ class Element {
 
 export function createElement (type, props = {}, children) {
   children = children || props.children;
-  const el = new Element({ type, props, children });
-  return el;
+  return new Element({ type, props, children });
 }
 
 function update (el, parent) {
@@ -94,6 +91,10 @@ export function render (el, element, oldElement) {
   return _el;
 }
 
-const Underreact = { Component, createElement, render }
+const Underreact = {
+  Component,
+  createElement,
+  render,
+}
 
 export default Underreact;
