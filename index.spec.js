@@ -5,7 +5,7 @@ import {
   render,
 } from './';
 
-describe('UnderReact', () => {
+describe('Underreact', () => {
   it('should render DOM elements', () => {
     const main = document.createElement('main');
     const overReactElement = createElement('div', null, [

@@ -1,4 +1,5 @@
-// Underreact: a (deficient) React clone in 100 lines
+// Underreact: a (deficient) React clone in 99 lines
+
 export class Component {
   constructor (props = {}) {
     this.props = props;
@@ -12,7 +13,7 @@ export class Component {
     if (this.props._parent) {
       this._element = render(this.render(), this.props._parent, oldElement);
     } else {
-      this.render().renderer()();
+      this.render().mountOn();
     }
   }
 
@@ -43,41 +44,35 @@ class Element {
       el.appendChild(document.createTextNode(children));
     } else {
       children.forEach((child) => {
-        el.appendChild(child.renderer(el)());
+        el.appendChild(child.mountOn(el));
       });
     }
   }
 
-  overReactElementRenderer () {
+  mountOverReactElement () {
     const { type, props, children } = this.props;
     const { _parent } = this;
-    const renderOverReactComponent = () => {
-      const instance = new type({ ...props, _parent });
-      const el = instance.render();
-      if (el == null) return el;
-      instance._element = el.renderer(_parent)();
-      return instance._element;
-    };
-    return renderOverReactComponent;
+    const instance = new type({ ...props, _parent });
+    const el = instance.render();
+    if (el == null) return el;
+    instance._element = el.mountOn(_parent);
+    return instance._element;
   }
 
-  htmlElementRenderer () {
+  mountHtmlElement () {
     const { type, props, children } = this.props;
-    const renderHtmlElement = () => {
-      const el = document.createElement(type);
-      this.bindHtmlProps(el);
-      this.renderChildren(el, children);
-      return el;
-    }
-    return renderHtmlElement;
+    const el = document.createElement(type);
+    this.bindHtmlProps(el);
+    this.renderChildren(el, children);
+    return el;
   }
 
-  renderer (_parent) {
+  mountOn (_parent) {
     this._parent = _parent;
     if (typeof this.props.type !== 'string') {
-      return this.overReactElementRenderer();
+      return this.mountOverReactElement();
     } else {
-      return this.htmlElementRenderer();
+      return this.mountHtmlElement();
     }
   }
 }
@@ -89,7 +84,7 @@ export function createElement (type, props = {}, children) {
 }
 
 function update (el, parent) {
-  return el.renderer(parent)();
+  return el.mountOn(parent);
 }
 
 export function render (el, element, oldElement) {
@@ -98,3 +93,7 @@ export function render (el, element, oldElement) {
   element.appendChild(_el);
   return _el;
 }
+
+const Underreact = { Component, createElement, render }
+
+export default Underreact;

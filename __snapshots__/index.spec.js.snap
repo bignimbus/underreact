@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UnderReact can bind event listeners 1`] = `"<main><div><h1>The button has not been clicked</h1><button>Click me</button></div></main>"`;
+exports[`Underreact can bind event listeners 1`] = `"<main><div><h1>The button has not been clicked</h1><button>Click me</button></div></main>"`;
 
-exports[`UnderReact can bind event listeners 2`] = `"<main><div><h1>The button has been clicked</h1><button>Click me</button></div></main>"`;
+exports[`Underreact can bind event listeners 2`] = `"<main><div><h1>The button has been clicked</h1><button>Click me</button></div></main>"`;
 
-exports[`UnderReact can render props 1`] = `"<main><p>bar</p></main>"`;
+exports[`Underreact can render props 1`] = `"<main><p>bar</p></main>"`;
 
-exports[`UnderReact can rerender child components with updated props 1`] = `"<main><div><h1>The parent element was not clicked</h1><button>Click me</button></div></main>"`;
+exports[`Underreact can rerender child components with updated props 1`] = `"<main><div><h1>The parent element was not clicked</h1><button>Click me</button></div></main>"`;
 
-exports[`UnderReact can rerender child components with updated props 2`] = `"<main><div><h1>The parent element was clicked</h1><button>Click me</button></div></main>"`;
+exports[`Underreact can rerender child components with updated props 2`] = `"<main><div><h1>The parent element was clicked</h1><button>Click me</button></div></main>"`;
 
-exports[`UnderReact can rerender when state changes 1`] = `"<main><p>foo</p></main>"`;
+exports[`Underreact can rerender when state changes 1`] = `"<main><p>foo</p></main>"`;
 
-exports[`UnderReact can rerender when state changes 2`] = `"<main><p>bar</p></main>"`;
+exports[`Underreact can rerender when state changes 2`] = `"<main><p>bar</p></main>"`;
 
-exports[`UnderReact should render DOM elements 1`] = `"<main><div><h1>Hello, world!</h1><p>good to be here</p></div></main>"`;
+exports[`Underreact should render DOM elements 1`] = `"<main><div><h1>Hello, world!</h1><p>good to be here</p></div></main>"`;
 
-exports[`UnderReact should render OverReact Components 1`] = `"<main><div><h1>Hello, world!</h1><p>Sup</p></div></main>"`;
+exports[`Underreact should render OverReact Components 1`] = `"<main><div><h1>Hello, world!</h1><p>Sup</p></div></main>"`;
