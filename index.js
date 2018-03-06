@@ -76,25 +76,25 @@ class Element {
 }
 
 export function createElement (type, props = {}, children) {
-  children = children || props.children;
-  return new Element({ type, props, children });
+  return new Element({ type, props, children || props.children });
 }
 
 function update (el, parent) {
   return el.mountOn(parent);
 }
 
+function destroy (el) {
+  [...(el.children || [])].forEach((child) => destroy(child));
+  [...el.attributes].forEach((attr) => el[attr] = null);
+  el = null;
+}
+
 export function render (el, element, oldElement) {
-  if (oldElement) element.removeChild(oldElement);
+  if (oldElement) {
+    element.removeChild(oldElement);
+    destroy(oldElement);
+  }
   const _el = update(el, element);
   element.appendChild(_el);
   return _el;
 }
-
-const Underreact = {
-  Component,
-  createElement,
-  render,
-}
-
-export default Underreact;
