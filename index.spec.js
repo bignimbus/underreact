@@ -16,7 +16,7 @@ describe('Underreact', () => {
     expect(main.outerHTML).toMatchSnapshot();
   });
 
-  it('should render OverReact Components', () => {
+  it('should render Underreact Components', () => {
     class MyComponent extends Component {
       render () {
         return createElement('div', null, [
@@ -28,6 +28,7 @@ describe('Underreact', () => {
 
     const main = document.createElement('main');
     const overReactElement = createElement(MyComponent);
+
     render(overReactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
   });
@@ -63,7 +64,7 @@ describe('Underreact', () => {
     expect(component.render().props.children).toBe('bar');
   });
 
-  it('can rerender when state changes', async () => {
+  fit('can rerender when state changes', async () => {
     class MyComponent extends Component {
       constructor (props) {
         super(props);

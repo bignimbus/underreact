@@ -16,4 +16,4 @@ exports[`Underreact can rerender when state changes 2`] = `"<main><p>bar</p></ma
 
 exports[`Underreact should render DOM elements 1`] = `"<main><div><h1>Hello, world!</h1><p>good to be here</p></div></main>"`;
 
-exports[`Underreact should render OverReact Components 1`] = `"<main><div><h1>Hello, world!</h1><p>Sup</p></div></main>"`;
+exports[`Underreact should render Underreact Components 1`] = `"<main><div><h1>Hello, world!</h1><p>Sup</p></div></main>"`;

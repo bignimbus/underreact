@@ -3,17 +3,12 @@ export class Component {
   constructor (props = {}) {
     this.props = props;
     this.state = {};
+    this._overReactElement = null;
     return this;
   }
 
-  setState (state) {
+  setState (state = {}) {
     Object.assign(this.state, state);
-    const oldElement = this._element;
-    if (this.props._parent) {
-      this._element = render(this.render(), this.props._parent, oldElement);
-    } else {
-      this.render().mountOn();
-    }
   }
 
   render () {
@@ -25,76 +20,81 @@ class Element {
   constructor (opts) {
     const { type, props, children = [] } = opts;
     this.props = { type, props, children };
+    this._overReactElement = null;
+    this._element = this.render();
+    this._componentInstance = null;
+    this._textNode = null;
     return this;
   }
 
-  bindHtmlProps (el) {
-    const { props = {} } = this.props;
-    for (let key in props) {
-      if (props.hasOwnProperty(key)) {
-        el[key] = props[key];
-      }
-    }
+  hasComponent () {
+    return typeof this.props.type !== 'string';
   }
 
-  renderChildren (el, children) {
-    if (typeof children === 'string') {
-      el.appendChild(document.createTextNode(children));
+  renderComponent () {
+    const { type, props } = this.props;
+    this._componentInstance = new type(props);
+    this.props.children = [this._componentInstance.render()];
+  }
+
+  renderElement (type = this.props.type) {
+    return document.createElement(type);
+  }
+
+  render () {
+    if (this.hasComponent()) {
+      return this.renderComponent();
     } else {
-      children.forEach((child) => {
-        el.appendChild(child.mountOn(el));
-      });
+      return this.renderElement();
     }
   }
 
-  mountOverReactElement () {
-    const { type, props, children } = this.props;
-    const { _parent } = this;
-    const instance = new type({ ...props, _parent });
-    const el = instance.render();
-    if (el == null) return el;
-    instance._element = el.mountOn(_parent);
-    return instance._element;
+  updateProps () {
+    [...this._element.attributes].forEach((attr) => {
+      this._element[attr] = this.props.props[attr] || null;
+    });
   }
 
-  mountHtmlElement () {
-    const { type, props, children } = this.props;
-    const el = document.createElement(type);
-    this.bindHtmlProps(el);
-    this.renderChildren(el, children);
-    return el;
+  updateChildren () {
+    if (this.props.children instanceof Array) {
+      this.props.children.forEach((child) => child.update());
+    } else {
+      if (this._textNode) {
+        this._element.removeChild(this._textNode);
+      }
+      this._textNode = document.createTextNode(this.props.children);
+      this._element.appendChild(this._textNode);
+    }
+  }
+
+  update () {
+    if (!this.hasComponent()) {
+      this.updateProps();
+    }
+    this.updateChildren();
   }
 
   mountOn (_parent) {
-    this._parent = _parent;
-    if (typeof this.props.type !== 'string') {
-      return this.mountOverReactElement();
+    this.update();
+    const elementToMountOn = this._element || _parent;
+    if (this.props.children instanceof Array) {
+      this.props.children.forEach((child) => child.mountOn(elementToMountOn));
     } else {
-      return this.mountHtmlElement();
+      this._element.appendChild(this._textNode);
+    }
+    if (this._element) {
+      _parent.appendChild(this._element);
     }
   }
 }
 
 export function createElement (type, props = {}, children) {
-  return new Element({ type, props, children || props.children });
+  children = children || props.children;
+  return new Element({ type, props, children });
+  // TODO:
+  // return object with memoized stuff! Of course!
 }
 
-function update (el, parent) {
-  return el.mountOn(parent);
-}
-
-function destroy (el) {
-  [...(el.children || [])].forEach((child) => destroy(child));
-  [...el.attributes].forEach((attr) => el[attr] = null);
-  el = null;
-}
-
-export function render (el, element, oldElement) {
-  if (oldElement) {
-    element.removeChild(oldElement);
-    destroy(oldElement);
-  }
-  const _el = update(el, element);
-  element.appendChild(_el);
-  return _el;
+export function render (overReactElement, element) {
+  overReactElement.mountOn(element);
 }
