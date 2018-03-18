@@ -1,4 +1,4 @@
-// Underreact: a (deficient) React clone in 99 lines
+// Underreact: a (deficient) React clone in 101 lines
 export class Component {
   constructor (props = {}) {
     this.props = props;
@@ -76,7 +76,8 @@ class Element {
 }
 
 export function createElement (type, props = {}, children) {
-  return new Element({ type, props, children || props.children });
+  children = children || props.children;
+  return new Element({ type, props, children });
 }
 
 function update (el, parent) {
