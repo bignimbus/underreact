@@ -47,7 +47,7 @@ class Element {
     }
   }
 
-  mountOverReactElement () {
+  mountUnderreactElement () {
     const { type, props, children } = this.props;
     const { _parent } = this;
     const instance = new type({ ...props, _parent });
@@ -68,7 +68,7 @@ class Element {
   mountOn (_parent) {
     this._parent = _parent;
     if (typeof this.props.type !== 'string') {
-      return this.mountOverReactElement();
+      return this.mountUnderreactElement();
     } else {
       return this.mountHtmlElement();
     }

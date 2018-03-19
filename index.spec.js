@@ -8,15 +8,15 @@ import {
 describe('Underreact', () => {
   it('should render DOM elements', () => {
     const main = document.createElement('main');
-    const overReactElement = createElement('div', null, [
+    const underreactElement = createElement('div', null, [
       createElement('h1', null, 'Hello, world!'),
       createElement('p', null, 'good to be here'),
     ]);
-    render(overReactElement, main);
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
   });
 
-  it('should render OverReact Components', () => {
+  it('should render Underreact Components', () => {
     class MyComponent extends Component {
       render () {
         return createElement('div', null, [
@@ -27,8 +27,8 @@ describe('Underreact', () => {
     }
 
     const main = document.createElement('main');
-    const overReactElement = createElement(MyComponent);
-    render(overReactElement, main);
+    const underreactElement = createElement(MyComponent);
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
   });
 
@@ -40,8 +40,8 @@ describe('Underreact', () => {
     }
 
     const main = document.createElement('main');
-    const overReactElement = createElement(MyComponent, { foo: 'bar' });
-    render(overReactElement, main);
+    const underreactElement = createElement(MyComponent, { foo: 'bar' });
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
   });
 
@@ -81,8 +81,8 @@ describe('Underreact', () => {
     expect.assertions(2);
 
     const main = document.createElement('main');
-    const overReactElement = createElement(MyComponent, { foo: 'bar' });
-    render(overReactElement, main);
+    const underreactElement = createElement(MyComponent, { foo: 'bar' });
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
 
     document.dispatchEvent(new Event('myEvent'));
@@ -110,8 +110,8 @@ describe('Underreact', () => {
     expect.assertions(2);
 
     const main = document.createElement('main');
-    const overReactElement = createElement(MyComponent);
-    render(overReactElement, main);
+    const underreactElement = createElement(MyComponent);
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
 
     const button = main.querySelector('button');
@@ -152,8 +152,8 @@ describe('Underreact', () => {
     expect.assertions(2);
 
     const main = document.createElement('main');
-    const overReactElement = createElement(MyComponent);
-    render(overReactElement, main);
+    const underreactElement = createElement(MyComponent);
+    render(underreactElement, main);
     expect(main.outerHTML).toMatchSnapshot();
 
     const button = main.querySelector('button');
